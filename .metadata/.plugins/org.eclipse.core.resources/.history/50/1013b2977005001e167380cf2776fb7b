@@ -1,0 +1,39 @@
+package tests;
+
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class BaseClass {
+
+	@BeforeTest	
+	public void setup() throws Exception
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		
+		//caps.setCapability("platformName", "ANDROID");
+		caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
+		caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.0");
+		caps.setCapability(MobileCapabilityType.DEVICE_NAME, "");
+		caps.setCapability(MobileCapabilityType.UDID, "");
+		caps.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "");
+		caps.setCapability(MobileCapabilityType.APP, "G:\\RecordLabelApp.apk");
+		
+		caps.setCapability("appPackage", "");
+		caps.setCapability("appActivity", "");
+		caps.setCapability(MobileCapabilityType.NO_RESET, true);
+		
+		AndroidDriver driver= new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
+		driver.manage().timeouts().implicitlyWait(10);
+	}
+	@AfterTest
+	public void teardown()
+	{
+		
+	}
+}

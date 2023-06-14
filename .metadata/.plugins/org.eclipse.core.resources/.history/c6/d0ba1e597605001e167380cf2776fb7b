@@ -1,0 +1,84 @@
+package tests;
+
+import java.io.FileReader;
+import java.net.URL;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+
+public class BaseClass {
+	
+	public AndroidDriver driver;
+
+	@BeforeTest	
+	public void setup() throws Exception
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		
+		//caps.setCapability("platformName", "ANDROID");
+		caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
+		caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.0");
+		caps.setCapability(MobileCapabilityType.DEVICE_NAME, "");
+		caps.setCapability(MobileCapabilityType.UDID, "");
+		caps.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "");
+		caps.setCapability(MobileCapabilityType.APP, "G:\\RecordLabelApp.apk");
+		
+		caps.setCapability("appPackage", "com.example.myapplication");
+		caps.setCapability("appActivity", "");
+		caps.setCapability(MobileCapabilityType.NO_RESET, true);
+		
+		driver= new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
+		
+	}
+	
+	public void compare()
+	{
+		List<WebElement> elements = driver.findElements(By.xpath("//*"));
+	}
+	
+	public void errorFix()
+	{
+		//JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+	      try {
+	    	   (FileReader reader = new FileReader("/Users/User/Desktop/course.json");
+	          
+	              //Read JSON file
+	              Object obj = jsonParser.parse(reader);
+	   
+	              JSONArray employeeList = (JSONArray) obj;
+	              System.out.println(employeeList);
+	               
+	              //Iterate over employee array
+	              employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+	              
+	         Object obj = jsonParser.parse(new FileReader("/Users/User/Desktop/course.json"));
+	         JSONObject jsonObject = (JSONObject)obj;
+	         String name = (String)jsonObject.get("Name");
+	         String course = (String)jsonObject.get("Course");
+	         JSONArray subjects = (JSONArray)jsonObject.get("Subjects");
+	      }
+	      catch(Exception e)
+	      {
+	    	  
+	      }
+		
+	}
+	
+	
+	@AfterTest
+	public void teardown()
+	{
+		
+	}
+}
